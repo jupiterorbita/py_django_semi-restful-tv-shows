@@ -10,7 +10,11 @@
       integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2"
       crossorigin="anonymous"
     />
-    <style></style>
+    <style>
+      ul {
+        color: red;
+      }
+    </style>
   </head>
   <body>
     <div class="wrapper">
@@ -23,10 +27,23 @@
         <h5><a href="/shows">Go Back</a></h5>
         <hr />
 
+        <!-- errors -->
+        {% if messages %}
+        <ul class="messages">
+          {% for message in messages %}
+          <li {% if message.tags %} class="{{ message.tags }}" {% endif %}>
+            {{ message.message }}
+          </li>
+          {% endfor %}
+        </ul>
+        {% endif %}
+
         <!-- form CREATE -->
         <form action="/show/{{this_show.id}}/update" method="POST">
           {% csrf_token %} Title<br />
-          <input type="text" name="title" value="{{this_show.title}}" /><br />
+          <input type="text" name="title" value="{{this_show.title}}" />
+
+          <br />
           Network <br />
           <input
             type="text"
@@ -38,6 +55,7 @@
           Description<br />
           <textarea name="desc" cols="50" rows="5">{{this_show.desc}}</textarea>
           <br />
+          <input type="hidden" name="isNew" value="False" />
           <input type="submit" value="UPDATE" />
         </form>
         <!-- END FORM  -->

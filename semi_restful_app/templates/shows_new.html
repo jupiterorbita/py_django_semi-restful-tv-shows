@@ -10,7 +10,11 @@
       integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2"
       crossorigin="anonymous"
     />
-    <style></style>
+    <style>
+      ul {
+        color: red;
+      }
+    </style>
   </head>
   <body>
     <div class="wrapper">
@@ -19,6 +23,17 @@
         <h1>Add a New Station - CREATE</h1>
         <h5><a href="/shows">Go Back</a></h5>
         <hr />
+
+        <!-- errors -->
+        {% if messages %}
+        <ul class="messages">
+          {% for message in messages %}
+          <li {% if message.tags %} class="{{ message.tags }}" {% endif %}>
+            {{ message }}
+          </li>
+          {% endfor %}
+        </ul>
+        {% endif %}
 
         <!-- form CREATE -->
         <form action="/create" method="POST">
@@ -30,13 +45,14 @@
           <input
             type="date"
             name="release_date"
-            value="1999-09-09"
-            max="2020-12-31"
+            value="{{ today }}"
+            max="2027-12-31"
           /><br />
           Description<br />
           <textarea name="desc" cols="50" rows="5"></textarea>
           <br />
-          <input type="submit" value="Create" />
+          <input type="hidden" name="isNew" value="True" />
+          <input class="btn-primary" type="submit" value="Create" />
         </form>
         <!-- END FORM  -->
       </div>
